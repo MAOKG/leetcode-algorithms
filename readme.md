@@ -1,1 +1,1 @@
-Leetcode algorithm questions solved in Golang
+# Practice leetcode algorithm problems in Go
