@@ -33,7 +33,7 @@ func TestAddTwoNumbers(t *testing.T) {
 	result = addTwoNumbers(&a, &b)
 	assert.Equal(t, &c2, result)
 
-	// 0 + 8 -> 1 = 8 -> 1
+	// 0 + (8 -> 1) = 8 -> 1
 	a = ListNode{0, nil}
 	b1 = ListNode{1, nil}
 	b2 = ListNode{8, &b1}

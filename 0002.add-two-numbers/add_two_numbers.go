@@ -7,13 +7,13 @@ type ListNode struct {
 }
 
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
-	var nodes []*ListNode
-	var carry int
+	dummyHead := &ListNode{}
+	currNode := dummyHead
+	carry := 0
 	a, b := l1, l2
 
-	for (a != nil) || (b != nil) || carry > 0 {
+	for a != nil || b != nil || carry > 0 {
 		val := carry
-		carry = 0
 		if a != nil {
 			val += a.Val
 			a = a.Next
@@ -22,18 +22,10 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 			val += b.Val
 			b = b.Next
 		}
-		if val >= 10 {
-			val -= 10
-			carry = 1
-		}
-		nodes = append(nodes, &ListNode{Val: val})
+		currNode.Next = &ListNode{Val: val % 10}
+		currNode = currNode.Next
+		carry = val / 10
 	}
 
-	for index, node := range nodes {
-		if index < len(nodes)-1 {
-			node.Next = nodes[index+1]
-		}
-	}
-
-	return nodes[0]
+	return dummyHead.Next
 }
