@@ -10,6 +10,7 @@ func twoSum(nums []int, target int) []int {
 		}
 		numsMap[num] = i
 	}
-
 	return nil
 }
+
+// 4ms, 100%
