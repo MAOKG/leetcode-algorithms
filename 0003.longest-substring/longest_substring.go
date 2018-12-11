@@ -7,26 +7,24 @@ func lengthOfLongestSubstring(s string) int {
 	if len(s) == 0 {
 		return 0
 	}
+	var i, j int
 	max := 1
 	r := []rune(s)
 	// map the last seen location
 	locationMap := make(map[rune]int)
-
-	for i := 0; i+max < len(s); i++ {
-		locationMap[r[i]] = i
-		l := 1
-		for i+l < len(s) {
-			j, ok := locationMap[r[i+l]]
-			if ok && j >= i && j < i+l {
-				break
+	// slide window [i, j)
+	for i < len(r) && j < len(r) {
+		_, ok := locationMap[r[j]]
+		if ok {
+			delete(locationMap, r[i])
+			i++
+		} else {
+			locationMap[r[j]] = j
+			j++
+			if j-i > max {
+				max = j - i
 			}
-			locationMap[r[i+l]] = i + l
-			l++
-		}
-		if l > max {
-			max = l
 		}
 	}
-
 	return max
 }
