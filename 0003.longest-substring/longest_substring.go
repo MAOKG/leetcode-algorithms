@@ -1,11 +1,8 @@
 package problem3
 
 func lengthOfLongestSubstring(s string) int {
-	if len(s) == 1 {
-		return 1
-	}
-	if len(s) == 0 {
-		return 0
+	if len(s) < 2 {
+		return len(s)
 	}
 	var i, j int
 	max := 1
@@ -28,3 +25,5 @@ func lengthOfLongestSubstring(s string) int {
 	}
 	return max
 }
+
+// 12ms, 70%
