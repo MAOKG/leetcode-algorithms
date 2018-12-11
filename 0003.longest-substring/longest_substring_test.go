@@ -18,4 +18,12 @@ func TestLongestSubstring(t *testing.T) {
 	input = "pwwkew"
 	result = lengthOfLongestSubstring(input)
 	assert.Equal(t, 3, result)
+
+	input = "anviaj"
+	result = lengthOfLongestSubstring(input)
+	assert.Equal(t, 5, result)
+
+	input = "abcde"
+	result = lengthOfLongestSubstring(input)
+	assert.Equal(t, 5, result)
 }

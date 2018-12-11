@@ -9,10 +9,10 @@ func lengthOfLongestSubstring(s string) int {
 	}
 	max := 1
 	r := []rune(s)
-	// map the last seen location
-	locationMap := make(map[rune]int)
 
 	for i := 0; i+max < len(s); i++ {
+		// map the last seen location
+		locationMap := make(map[rune]int)
 		locationMap[r[i]] = i
 		l := 1
 		for i+l < len(s) {
