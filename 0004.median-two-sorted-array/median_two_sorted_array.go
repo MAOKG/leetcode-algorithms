@@ -14,6 +14,7 @@ func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
 	if l1 == 1 && l2 == 1 {
 		return float64(nums1[0]+nums2[2]) / 2
 	}
+	// isEven := (l1+l2)%2 == 0
 	if l1 == 1 {
 		if nums1[0] <= nums2[l1/2-1] {
 			return float64(nums2[l1/2-1])
@@ -31,6 +32,18 @@ func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
 			return float64(nums2[0])
 		}
 		return float64(nums1[l1/2])
+	}
+	if nums1[l1-1] <= nums2[0] {
+		if l1 < l2 {
+			return float64(nums2[(l2+l1)/2-l1])
+		}
+		return float64(nums1[(l1+l2)/2])
+	}
+	if nums2[l2-1] <= nums1[0] {
+		if l2 < l1 {
+			return float64(nums1[(l2+l1)/2-l2])
+		}
+		return float64(nums2[(l1+l2)/2])
 	}
 
 	k1 := findMedian(nums1, nums2, l1, l2, 0, l1-1)
