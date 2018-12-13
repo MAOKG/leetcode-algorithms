@@ -12,8 +12,8 @@ func TestFindMedianSortedArrays(t *testing.T) {
 	result := findMedianSortedArrays(nums1, nums2)
 	assert.Equal(t, 2.0, result)
 
-	nums1 = []int{1, 2}
-	nums2 = []int{3, 4}
+	nums1 = []int{1, 4}
+	nums2 = []int{2, 3, 5}
 	result = findMedianSortedArrays(nums1, nums2)
-	assert.Equal(t, 2.5, result)
+	assert.Equal(t, 3.0, result)
 }
