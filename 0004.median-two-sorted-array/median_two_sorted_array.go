@@ -82,7 +82,7 @@ func findMedian(nums1 []int, nums2 []int, l1 int, l2 int, low int, heigh int) fl
 		return float64(maxFirstHalf+minSecondHalf) / 2
 	}
 	if nums1[i-1] > nums2[j] {
-		return findMedian(nums1, nums2, l1, l2, low, i-1)
+		return findMedian(nums1, nums2, l1, l2, low, i)
 	}
 	if nums2[j-1] > nums1[i] {
 		return findMedian(nums1, nums2, l1, l2, i+1, heigh)
