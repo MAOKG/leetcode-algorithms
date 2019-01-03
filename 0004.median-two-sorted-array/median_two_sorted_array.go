@@ -26,7 +26,7 @@ func findMedian(nums1 []int, nums2 []int, l1 int, l2 int, low int, heigh int) fl
 	isEven := (l1+l2)%2 == 0
 	if l1 == 1 {
 		if nums1[0] <= nums2[l2/2] {
-			maxFirstHalf = findMax(nums1[0], nums2[l2/2-1])
+			maxFirstHalf = getMax(nums1[0], nums2[l2/2-1])
 			if !isEven {
 				return float64(maxFirstHalf)
 			}
@@ -36,7 +36,7 @@ func findMedian(nums1 []int, nums2 []int, l1 int, l2 int, low int, heigh int) fl
 		if !isEven {
 			return float64(maxFirstHalf)
 		}
-		minSecondHalf = findMin(nums1[0], nums2[l2/2+1])
+		minSecondHalf = getMin(nums1[0], nums2[l2/2+1])
 		return float64(maxFirstHalf+minSecondHalf) / 2
 	}
 
@@ -67,7 +67,7 @@ func findMedian(nums1 []int, nums2 []int, l1 int, l2 int, low int, heigh int) fl
 	i := (low + heigh) / 2
 	j := (l1+l2+1)/2 - i
 	if i >= l1 {
-		maxFirstHalf = findMax(nums1[l1-1], nums2[(l2-l1+1)/2-1])
+		maxFirstHalf = getMax(nums1[l1-1], nums2[(l2-l1+1)/2-1])
 		if !isEven {
 			return float64(maxFirstHalf)
 		}
@@ -78,7 +78,7 @@ func findMedian(nums1 []int, nums2 []int, l1 int, l2 int, low int, heigh int) fl
 		if !isEven {
 			return float64(maxFirstHalf)
 		}
-		minSecondHalf = findMin(nums1[0], nums2[(l1+l2+1)/2])
+		minSecondHalf = getMin(nums1[0], nums2[(l1+l2+1)/2])
 		return float64(maxFirstHalf+minSecondHalf) / 2
 	}
 	if nums1[i-1] > nums2[j] {
@@ -87,11 +87,11 @@ func findMedian(nums1 []int, nums2 []int, l1 int, l2 int, low int, heigh int) fl
 	if nums2[j-1] > nums1[i] {
 		return findMedian(nums1, nums2, l1, l2, i+1, heigh)
 	}
-	maxFirstHalf = findMax(nums1[i-1], nums2[j-1])
+	maxFirstHalf = getMax(nums1[i-1], nums2[j-1])
 	if !isEven {
 		return float64(maxFirstHalf)
 	}
-	minSecondHalf = findMin(nums1[i], nums2[j])
+	minSecondHalf = getMin(nums1[i], nums2[j])
 	return float64(maxFirstHalf+minSecondHalf) / 2
 }
 
@@ -105,8 +105,16 @@ func findMedianSingleArray(nums []int) float64 {
 	return m
 }
 
+// helper function to find the median given max of first half and min of second half
+func getMedian(maxFirstHalf int, minSecondHalf int, isEven bool) float64 {
+	if !isEven {
+		return float64(maxFirstHalf)
+	}
+	return float64(maxFirstHalf+minSecondHalf) / 2
+}
+
 // helper function to find the min of two integers
-func findMin(a, b int) int {
+func getMin(a, b int) int {
 	if a <= b {
 		return a
 	}
@@ -114,11 +122,9 @@ func findMin(a, b int) int {
 }
 
 // helper function to find the max of two integers
-func findMax(a, b int) int {
+func getMax(a, b int) int {
 	if a >= b {
 		return a
 	}
 	return b
 }
-
-// find the partition i, j where nums1[i-1] <= nums2[j] && nums2[j-1] <= num1[i]
