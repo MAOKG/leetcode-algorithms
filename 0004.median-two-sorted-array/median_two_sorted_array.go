@@ -11,6 +11,14 @@ func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
 	if l2 == 0 {
 		return findMedianSingleArray(nums1)
 	}
+	if nums1[l1-1] <= nums2[0] {
+		nums := append(nums1, nums2...)
+		return findMedianSingleArray(nums)
+	}
+	if nums1[0] >= nums2[l2-1] {
+		nums := append(nums2, nums1...)
+		return findMedianSingleArray(nums)
+	}
 	if l1 == 1 && l2 == 1 {
 		return float64(nums1[0]+nums2[0]) / 2
 	}
@@ -27,40 +35,12 @@ func findMedian(nums1 []int, nums2 []int, l1 int, l2 int, low int, heigh int) fl
 	if l1 == 1 {
 		if nums1[0] <= nums2[l2/2] {
 			maxFirstHalf = getMax(nums1[0], nums2[l2/2-1])
-			if !isEven {
-				return float64(maxFirstHalf)
-			}
-			return float64(maxFirstHalf+nums2[l2/2]) / 2
+			minSecondHalf = nums2[l2/2]
+		} else {
+			maxFirstHalf = nums2[l2/2]
+			minSecondHalf = getMin(nums1[0], nums2[l2/2+1])
 		}
-		maxFirstHalf = nums2[l2/2]
-		if !isEven {
-			return float64(maxFirstHalf)
-		}
-		minSecondHalf = getMin(nums1[0], nums2[l2/2+1])
-		return float64(maxFirstHalf+minSecondHalf) / 2
-	}
-
-	if nums1[l1-1] <= nums2[0] {
-		if l1 == l2 {
-			return float64(nums1[l1-1]+nums2[0]) / 2
-		}
-		maxFirstHalf = nums2[(l2-l1+1)/2-1]
-		if !isEven {
-			return float64(maxFirstHalf)
-		}
-		minSecondHalf = nums2[(l2-l1+1)/2]
-		return float64(maxFirstHalf+minSecondHalf) / 2
-	}
-	if nums1[0] >= nums2[l2-1] {
-		if l1 == l2 {
-			return float64(nums1[0]+nums2[l2-1]) / 2
-		}
-		maxFirstHalf = nums2[(l2+l1+1)/2-1]
-		if !isEven {
-			return float64(maxFirstHalf)
-		}
-		minSecondHalf = nums2[(l2+l1+1)/2]
-		return float64(maxFirstHalf+minSecondHalf) / 2
+		return getMedian(maxFirstHalf, minSecondHalf, isEven)
 	}
 
 	// partition nums1 and nums2
@@ -68,18 +48,13 @@ func findMedian(nums1 []int, nums2 []int, l1 int, l2 int, low int, heigh int) fl
 	j := (l1+l2+1)/2 - i
 	if i >= l1 {
 		maxFirstHalf = getMax(nums1[l1-1], nums2[(l2-l1+1)/2-1])
-		if !isEven {
-			return float64(maxFirstHalf)
-		}
-		return float64(maxFirstHalf+nums2[(l2-l1+1)/2]) / 2
+		minSecondHalf = nums2[(l2-l1+1)/2]
+		return getMedian(maxFirstHalf, minSecondHalf, isEven)
 	}
 	if i == 0 {
 		maxFirstHalf = nums2[(l1+l2+1)/2-1]
-		if !isEven {
-			return float64(maxFirstHalf)
-		}
 		minSecondHalf = getMin(nums1[0], nums2[(l1+l2+1)/2])
-		return float64(maxFirstHalf+minSecondHalf) / 2
+		return getMedian(maxFirstHalf, minSecondHalf, isEven)
 	}
 	if nums1[i-1] > nums2[j] {
 		return findMedian(nums1, nums2, l1, l2, low, i)
@@ -88,11 +63,8 @@ func findMedian(nums1 []int, nums2 []int, l1 int, l2 int, low int, heigh int) fl
 		return findMedian(nums1, nums2, l1, l2, i+1, heigh)
 	}
 	maxFirstHalf = getMax(nums1[i-1], nums2[j-1])
-	if !isEven {
-		return float64(maxFirstHalf)
-	}
 	minSecondHalf = getMin(nums1[i], nums2[j])
-	return float64(maxFirstHalf+minSecondHalf) / 2
+	return getMedian(maxFirstHalf, minSecondHalf, isEven)
 }
 
 // helper function to find median of a single sorted array
@@ -128,3 +100,5 @@ func getMax(a, b int) int {
 	}
 	return b
 }
+
+// 40ms, 19%
