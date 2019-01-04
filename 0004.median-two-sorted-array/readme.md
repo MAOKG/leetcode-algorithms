@@ -43,7 +43,6 @@ MEDIAN-TWO-ARRAYS(X, Y)
   end if
 END
 
-
 FIND-MEDIAN(A, B, l1, l2, low, heigh)
   HANDLE-EDGE-CASES...
   i = (low + heigh)/2
@@ -59,8 +58,6 @@ FIND-MEDIAN(A, B, l1, l2, low, heigh)
     return GET-MEDIAN(maxFirstHalf, minSecondHalf, isEven)
   end if
 END
-
-
 
 GET-MEDIAN(maxFirstHalf, minSecondHalf, isEven)
   if isEven == false
