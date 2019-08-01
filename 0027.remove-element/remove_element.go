@@ -1,9 +1,7 @@
 package problem27
 
 func removeElement(nums []int, val int) int {
-	count := 0
-	l := 0
-	r := len(nums) - 1
+	l, r, count := 0, len(nums)-1, 0
 	for l <= r {
 		if nums[l] == val {
 			if nums[r] != val {
